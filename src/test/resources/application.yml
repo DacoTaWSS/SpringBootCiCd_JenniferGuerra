@@ -19,3 +19,7 @@ spring:
 logging:
   level:
     root: warn
+
+jwt:
+  secret: MiClaveSecretaSuperSeguraParaJWTqueDebeSerLargaAlMenos256Bits!!
+  expiration-ms: 3600000
