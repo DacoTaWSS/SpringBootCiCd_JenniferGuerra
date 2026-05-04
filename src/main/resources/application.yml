@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/spring_lab?useSSL=false&serverTimezone=UTC
+    username: root
+    password: micha
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  devtools:
+    restart:
+      enabled: true
+
+server:
+  port: 8080
+
+jwt:
+  secret: MiClaveSecretaSuperSeguraParaJWTqueDebeSerLargaAlMenos256Bits!!
+  expiration-ms: 3600000
