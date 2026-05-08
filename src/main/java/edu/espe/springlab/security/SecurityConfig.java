@@ -28,7 +28,7 @@ public class SecurityConfig {
             // Reglas de autorizacion
             .authorizeHttpRequests(auth -> auth
                 // Endpoints publicos (login)
-                .requestMatchers("/api/auth/**").permitAll()
+                    .requestMatchers("/api/students/**").permitAll()
                 // Todo lo demas requiere autenticacion
                 .anyRequest().authenticated()
             )
