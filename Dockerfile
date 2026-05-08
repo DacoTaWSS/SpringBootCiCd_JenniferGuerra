@@ -13,7 +13,11 @@ RUN ./gradlew bootJar --no-daemon
 # Etapa 2: Run
 FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
+
 COPY --from=build /app/build/libs/*.jar app.jar
 
+COPY --from=build /app/src/test/resources/application.yml test-config.yml
+
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+ENTRYPOINT ["java", "-Dspring.config.location=file:/app/test-config.yml", "-jar", "app.jar"]
