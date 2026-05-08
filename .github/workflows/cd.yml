@@ -1,0 +1,17 @@
+# .github/workflows/cd.yml
+name: CD - Deploy to Render
+
+on:
+  workflow_run:
+    workflows: ["CI - Build and Test"] # Nombre exacto de tu otro archivo
+    types: [completed]
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Trigger Render Deploy Hook
+        run: |
+          curl -f ${{ secrets.RENDER_DEPLOY_HOOK }}
