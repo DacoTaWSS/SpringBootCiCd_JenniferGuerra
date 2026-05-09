@@ -34,4 +34,22 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy
     if: ${{ failure() }}
-    uses: ./.github/workflows/rollback.yml
+    steps:
+      - name: Get last successful deploy ID
+        id: get_deploy
+        run: |
+          DEPLOY_ID=$(curl -s --request GET \
+            --url "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys?limit=20" \
+            --header "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            --header "Accept: application/json" \
+            | jq -r '[.[] | select(.deploy.status == "live")] | .[1].deploy.id')
+          echo "deploy_id=$DEPLOY_ID" >> $GITHUB_OUTPUT
+          echo "Last successful deploy ID: $DEPLOY_ID"
+
+      - name: Rollback to last successful deploy
+        run: |
+          curl --request POST \
+            --url "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys/${{ steps.get_deploy.outputs.deploy_id }}/rollback" \
+            --header "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            --header "Accept: application/json"
+          echo "Rollback triggered to deploy ${{ steps.get_deploy.outputs.deploy_id }}"
