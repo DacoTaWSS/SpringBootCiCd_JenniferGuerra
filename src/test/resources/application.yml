@@ -23,3 +23,6 @@ logging:
 jwt:
   secret: MiClaveSecretaSuperSeguraParaJWTqueDebeSerLargaAlMenos256Bits!!
   expiration-ms: 3600000
+
+app:
+  version: ${APP_VERSION:local}
