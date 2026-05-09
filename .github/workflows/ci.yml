@@ -28,3 +28,6 @@ jobs:
 
       - name: Run Tests
         run: ./gradlew test
+
+      - name: Force failure for testing
+        run: exit 1
