@@ -25,9 +25,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentResponse create(StudentCreateRequest request) {
         //aqui sabemos si dentro de base de datos tenemos el correo
-        if(repo.existsByEmail(request.getEmail())){
-            throw new ConflictException("El email ya esta registrado");
-        }
+        /*
+            if(repo.existsByEmail(request.getEmail())){
+                throw new ConflictException("El email ya esta registrado");
+            }*/
         Student s = new Student();
         s.setFullName(request.getFullName());
         s.setEmail(request.getEmail());

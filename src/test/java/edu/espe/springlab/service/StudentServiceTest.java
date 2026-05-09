@@ -37,5 +37,6 @@ public class StudentServiceTest {
         req.setBirthDate(LocalDate.of(2001,10,15));
 
         assertThatThrownBy(() -> service.create(req)).isInstanceOf(ConflictException.class);
+
     }
 }
